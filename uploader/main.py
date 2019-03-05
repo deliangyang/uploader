@@ -12,4 +12,3 @@ nb.AddPage(ExamplePanel(nb), "Page Three")
 frame.Show()
 
 app.MainLoop()
-
