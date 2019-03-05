@@ -7,37 +7,16 @@ import wx
 class ExamplePanel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
-        self.quote = wx.StaticText(self, label="Your quote :", pos=(20, 30))
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
+        import_excel = wx.BoxSizer(wx.HORIZONTAL)
+        self.logger = wx.TextCtrl(self, size=(120, 30))
+        self.btn_open_excel = wx.Button(self, label='导入Excel')
+        import_excel.Add(self.logger, proportion=0, flag=wx.EXPAND, border=10, userData=None)
+        import_excel.Add((10, 10), proportion=0, flag=wx.EXPAND, border=10, userData=None)
+        import_excel.Add(self.btn_open_excel, proportion=0, flag=wx.EXPAND, border=10, userData=None)
+        mainSizer.Add(import_excel, proportion=0, flag=wx.TOP, border=10, userData=None)
+        self.SetSizer(mainSizer)
 
-        # A multiline TextCtrl - This is here to show how the events work in this program, don't pay too much attention to it
-        self.logger = wx.TextCtrl(self, pos=(300, 20), size=(200, 300), style=wx.TE_MULTILINE | wx.TE_READONLY)
-
-        # A button
-        self.button = wx.Button(self, label="Save", pos=(200, 325))
-        self.Bind(wx.EVT_BUTTON, self.OnClick, self.button)
-
-        # the edit control - one line version.
-        self.lblname = wx.StaticText(self, label="Your name :", pos=(20, 60))
-        self.editname = wx.TextCtrl(self, value="Enter here your name", pos=(150, 60), size=(140, -1))
-        self.Bind(wx.EVT_TEXT, self.EvtText, self.editname)
-        self.Bind(wx.EVT_CHAR, self.EvtChar, self.editname)
-
-        # the combobox Control
-        self.sampleList = ['friends', 'advertising', 'web search', 'Yellow Pages']
-        self.lblhear = wx.StaticText(self, label="How did you hear from us ?", pos=(20, 90))
-        self.edithear = wx.ComboBox(self, pos=(150, 90), size=(95, -1), choices=self.sampleList, style=wx.CB_DROPDOWN)
-        self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.edithear)
-        self.Bind(wx.EVT_TEXT, self.EvtText, self.edithear)
-
-        # Checkbox
-        self.insure = wx.CheckBox(self, label="Do you want Insured Shipment ?", pos=(20, 180))
-        self.Bind(wx.EVT_CHECKBOX, self.EvtCheckBox, self.insure)
-
-        # Radio Boxes
-        radioList = ['blue', 'red', 'yellow', 'orange', 'green', 'purple', 'navy blue', 'black', 'gray']
-        rb = wx.RadioBox(self, label="What color would you like ?", pos=(20, 210), choices=radioList, majorDimension=3,
-                         style=wx.RA_SPECIFY_COLS)
-        self.Bind(wx.EVT_RADIOBOX, self.EvtRadioBox, rb)
 
     def EvtRadioBox(self, event):
         self.logger.AppendText('EvtRadioBox: %d\n' % event.GetInt())
